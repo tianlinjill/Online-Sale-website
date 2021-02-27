@@ -57,39 +57,54 @@ window.addEventListener('load', function() {
     var num = 0;
     //circle contrl the circle button
     var circle = 0;
+
+    // added a Throttle valve to control the animation, only after the animation finished users could do next animation.
+    var flag = true;
     arr_r.addEventListener('click', function() {
-        // to make all images scolled, first copy the first image, if come to this one
-        // we need to rest the ul's left to 0.
-        if (num === ul.children.length - 1) {
-            ul.style.left = 0;
-            num = 0;
-        }
-        num++;
-        animate(ul, -num * focusWidth);
-        // click right arrow, circle would change accordingly.
-        circle++;
-        if (circle == ol.children.length) {
-            circle = 0;
-        }
-        circleChange();
-    })
-    arr_l.addEventListener('click', function() {
+        if (flag) {
+            // close the Throttle valve and wait for the animation finished.
+            flag = false;
             // to make all images scolled, first copy the first image, if come to this one
             // we need to rest the ul's left to 0.
-            if (num === 0) {
-                num = ul.children.length - 1;
-                ul.style.left = -num * focusWidth + 'px';
-
+            if (num === ul.children.length - 1) {
+                ul.style.left = 0;
+                num = 0;
             }
-            num--;
-            animate(ul, -num * focusWidth);
-            // click left arrow, circle would change accordingly.
-            //if cirecle <0 then it should change to 4
-            circle--;
-            if (circle < 0) {
-                circle = ol.children.length - 1;
+            num++;
+            animate(ul, -num * focusWidth, function() {
+                flag = true; // animation finised, open the Throttle valve.
+            });
+            // click right arrow, circle would change accordingly.
+            circle++;
+            if (circle == ol.children.length) {
+                circle = 0;
             }
             circleChange();
+        }
+    })
+    arr_l.addEventListener('click', function() {
+            if (flag) {
+                // close the Throttle valve and wait for the animation finished.
+                flag = false;
+                // to make all images scolled, first copy the first image, if come to this one
+                // we need to rest the ul's left to 0.
+                if (num === 0) {
+                    num = ul.children.length - 1;
+                    ul.style.left = -num * focusWidth + 'px';
+
+                }
+                num--;
+                animate(ul, -num * focusWidth, function() {
+                    flag = true; // animation finised, open the Throttle valve.
+                });
+                // click left arrow, circle would change accordingly.
+                //if cirecle <0 then it should change to 4
+                circle--;
+                if (circle < 0) {
+                    circle = ol.children.length - 1;
+                }
+                circleChange();
+            }
         })
         //change circle's className
     function circleChange() {

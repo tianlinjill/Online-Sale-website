@@ -20,6 +20,16 @@ https://github.com/tianlinjill/Online-Sale-website/blob/main/upload/HomePage.PNG
 
 https://github.com/tianlinjill/Online-Sale-website/blob/main/upload/phonePage.PNG
 
+
+
+## Update information in 27/02/2021:
+
+1. added a Throttle valve to control the animation, only after the animation finished users could do next animation.
+
+
+
+
+
 ## Update information in 25/02/2021:
 
 ##### 1.added new JavaScript to implemented main focus image change.
